@@ -27,7 +27,7 @@ public class Servidor {
                 grdsAddress = InetAddress.getByName("230.30.30.30");
                 grdsPort = 3030;
 
-                //verificar se ligação com base de dados é estabelcida ou não
+                //!!!!!!!!!!!!!!!!!!!!!verificar se ligação com base de dados é estabelcida ou não!!!!!!!!!!!!!!!!!!!!!!!!!
             }
             else if (args.length == 3) {
                 grdsAddress = InetAddress.getByName(args[0]);
