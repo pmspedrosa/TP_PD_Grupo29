@@ -1,6 +1,6 @@
 public class GRDS {
     public static void main(String[] args) {
-            System.out.println("o Rodrigo é gay");
+            System.out.println("tu é que és");
     }
 }
 
