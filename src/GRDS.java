@@ -6,9 +6,71 @@ import java.util.ArrayList;
 
 
 public class GRDS {
-    public static void main(String[] args) {
-            System.out.println("tu é que és");
+    private static final int MAX_SIZE = 120;
+    private static final int TIMEOUT = 10; //10 seg (multiplica por 1000 abaixo)
+
+    private ArrayList<Servidores> servers_ativos;
+    private int last_sv_distribuido = -1; //guarda último sv dado
+
+
+    public ArrayList<Servidores> getServers_ativos() {
+        return servers_ativos;
     }
+
+    public void setServer(String ip, int porto) {
+        Servidores s = new Servidores(ip, porto);
+        this.servers_ativos.add(s);
+    }
+
+    public void remove_sv(Servidores s){
+        this.servers_ativos.remove(s);
+    }
+
+
+    //cliente contacta GRDS para receber o IP  e o Porto de Escuta TCP do Servidor
+
+    public void distribui_svs(String ip_cliente, int porto_cliente){
+        if(++last_sv_distribuido > servers_ativos.size())
+            last_sv_distribuido = -1;
+
+        if(last_sv_distribuido == -1)
+            comunica_via_udp(ip_cliente, porto_cliente, this.servers_ativos.get(0));
+        else
+            comunica_via_udp(ip_cliente, porto_cliente, this.servers_ativos.get(++last_sv_distribuido));
+    }
+
+    public void comunica_via_udp(String ip, int porto, Servidores s){
+        InetAddress client_ip = null;
+        int client_port = -1;
+
+        DatagramPacket packet = null;
+
+        try(DatagramSocket socket = new DatagramSocket(); //autocloseable
+            ByteArrayOutputStream bout  = new ByteArrayOutputStream();
+            ObjectOutputStream oout = new ObjectOutputStream(bout)){
+            client_ip = InetAddress.getByName(ip);
+            client_port = porto;
+
+            socket.setSoTimeout(TIMEOUT*1000);
+
+            //Serializar servidores para um array de bytes encapsulado por bout
+            oout.writeUnshared(s);
+
+            //Construir um datagrama UDP com o resultado da serialização
+            packet = new DatagramPacket(bout.toByteArray(), bout.size(), client_ip,
+                    client_port);
+
+            socket.send(packet);
+        }catch(Exception e){
+            System.out.println("Problema:\n\t"+e);
+        }
+    }
+
+    public void verifica_inatividade(){
+        //.. threads
+    }
+
+
 }
 
 
