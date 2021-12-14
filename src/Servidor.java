@@ -1,4 +1,63 @@
+import java.io.IOException;
+import java.net.*;
+
 public class Servidor {
+    //public static final int MAX_SIZE = 256;
+    public static final String CONNECT_REQUEST = "SERVIDOR";
+    public static final int TIMEOUT = 10; //segundos
+
+    public static void main(String[] args) {
+        String sgdbAddress;
+        InetAddress grdsAddress;
+        int grdsPort;
+        DatagramPacket mypacket;
+
+/*
+        if(args.length != 3){
+            System.out.println("Sintaxe: java Servidor <IP do GRDS> <Porto de escuta do GRDS> <IP do SGBD>");
+            return;
+        }
+*/
+
+        try(DatagramSocket mysocket = new DatagramSocket()) {
+            mysocket.setSoTimeout(TIMEOUT * 1000);
+
+            //por omissão, tenta descobrir o GRDS no endereço de multicast 230.30.30.30 e porto UDP 3030
+            if(args.length == 1) {
+                grdsAddress = InetAddress.getByName("230.30.30.30");
+                grdsPort = 3030;
+
+                //verificar se ligação com base de dados é estabelcida ou não
+            }
+            else if (args.length == 3) {
+                grdsAddress = InetAddress.getByName(args[0]);
+                grdsPort = Integer.parseInt(args[1]);
+            }
+            else{
+                System.out.println("Sintaxe: java Servidor <IP do GRDS> <Porto de escuta do GRDS> <IP do SGBD>");
+                System.out.println("OU java Servidor <IP do SGBD>");
+                return;
+            }
+
+            mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), grdsAddress, grdsPort);
+            mysocket.send(mypacket);
+
+        } catch(UnknownHostException e){
+            System.out.println("Destino desconhecido:\n\t"+e);
+        } catch(NumberFormatException e){
+            System.out.println("O porto do GRDS deve ser um inteiro positivo.");
+        } catch(SocketTimeoutException e){
+            System.out.println("Nao foi recebida qualquer resposta:\n\t"+e);
+        } catch(SocketException e){
+            System.out.println("Ocorreu um erro ao nivel do socket UDP:\n\t"+e);
+        } catch(IOException e){
+            System.out.println("Ocorreu um erro no acesso ao socket:\n\t"+e);
+        } finally{
+//            if(mysocket != null){
+//                mysocket.close();
+//            }
+        }
+    }
 }
 
 

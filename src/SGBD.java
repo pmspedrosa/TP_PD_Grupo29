@@ -1,5 +1,8 @@
 public class SGBD {
 
+
+    //função verifica se ligação foi estabelecida
+
 }
 
 
