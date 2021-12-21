@@ -1,8 +1,10 @@
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.*;
 
 public class Cliente {
-    public static final String CONNECT_REQUEST = "SERVIDOR";
+    public static final String CONNECT_REQUEST = "CLIENTE";
     public static final int TIMEOUT = 10; //segundos
     public static final int MAX_SIZE = 256;
 
@@ -47,6 +49,8 @@ public class Cliente {
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
