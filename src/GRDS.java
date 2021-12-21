@@ -34,7 +34,7 @@ public class GRDS {
     public static void setServer(ArrayList<Servidor_classe> servers_ativos, InetAddress ip, int porto){
         //ip e porto UDP!!!
 
-        if(contem(ip, porto, servers_ativos) == true) {
+        if(contem(ip, porto, servers_ativos)) {
             System.out.println("JÁ EXISTE!!!");
         }else{
             Servidor_classe s = new Servidor_classe(ip, porto);
@@ -98,15 +98,15 @@ public class GRDS {
 
 
 //responsável por manter o registo dos servidores ativos, direcionar as aplicações cliente
-// para os diversos servidores(round - robin) e difundir informação relevante;
+// para os diversos servidores(round - robin) e difundir informação relevante;-----
 
 
 
 //Na fase de arranque, os clientes e os servidores recebem o
-// endereço IP e o porto de escuta UDP do GRDS. >> utilização de parametros (ao iniciar o programa cliente)
+// endereço IP e o porto de escuta UDP do GRDS. >> utilização de parametros (ao iniciar o programa cliente)-----
 
 
-//se houver mais que um sv ativo ele distribui os clientes de acordo com escalonamento circular
+//se houver mais que um sv ativo ele distribui os clientes de acordo com escalonamento circular-----
 
 
 // Os servidores devem enviar, via UDP e com uma periodicidade de 20 segundos,
