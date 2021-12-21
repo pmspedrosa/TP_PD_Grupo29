@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 
 public class GRDS {
+    public static final String SV_CONNECT_REQUEST = "SERVIDOR";
+    public static final String CL_CONNECT_REQUEST = "CLIENTE";
     private static final int MAX_SIZE = 120;
     private static final int TIMEOUT = 10; //10 seg (multiplica por 1000 abaixo)
 
@@ -42,9 +44,9 @@ public class GRDS {
         }
     }
 
-    public void remove_sv(Servidores s){
-        this.servers_ativos.remove(s);
-    }
+//    public void remove_sv(Servidores s){
+//        servers_ativos.remove(s);
+//    }
 
 
     //cliente contacta GRDS para receber o IP  e o Porto de Escuta TCP do Servidor
@@ -53,22 +55,21 @@ public class GRDS {
             last_sv_distribuido = -1;
 
         if(last_sv_distribuido == -1)
-            comunica_via_udp(ip_cliente, porto_cliente, this.servers_ativos.get(0));
+            comunica_via_udp(ip_cliente, porto_cliente, servers_ativos.get(++last_sv_distribuido));
+
         else
-            comunica_via_udp(ip_cliente, porto_cliente, this.servers_ativos.get(++last_sv_distribuido));
+            comunica_via_udp(ip_cliente, porto_cliente, servers_ativos.get(last_sv_distribuido));
+
+        System.out.println("DEBUG SV: Size: " + servers_ativos.size() + "| atual: " + last_sv_distribuido++);
     }
 
-    public void comunica_via_udp(String ip, int porto, Servidores s){
-        InetAddress client_ip = null;
-        int client_port = -1;
+    public static void comunica_via_udp(InetAddress ip, int porto, Servidor_classe s){
 
         DatagramPacket packet = null;
 
         try(DatagramSocket socket = new DatagramSocket(); //autocloseable
             ByteArrayOutputStream bout  = new ByteArrayOutputStream();
             ObjectOutputStream oout = new ObjectOutputStream(bout)){
-            client_ip = InetAddress.getByName(ip);
-            client_port = porto;
 
             socket.setSoTimeout(TIMEOUT*1000);
 
@@ -76,11 +77,10 @@ public class GRDS {
             oout.writeUnshared(s);
 
             //Construir um datagrama UDP com o resultado da serialização
-            packet = new DatagramPacket(bout.toByteArray(), bout.size(), client_ip,
-                    client_port);
-
+            packet = new DatagramPacket(bout.toByteArray(), bout.size(), ip, porto);
             socket.send(packet);
-        }catch(Exception e){
+
+        } catch(Exception e){
             System.out.println("Problema:\n\t"+e);
         }
     }
@@ -89,7 +89,86 @@ public class GRDS {
         //.. threads
     }
 
+    public static void atualizaUDP(InetAddress ip, int portoTCP, int portoUDP, ArrayList<Servidor_classe> s){      //verificar se o servidor que está a contactar já existe na lista de svs ativos ou não
+        for(Servidor_classe sv : s) {
+            if (sv.getIp() == ip && sv.getPorto_escuta_TCP() == portoTCP) {
+                    sv.setPorto_escuta_UDP(portoUDP);
+            }
+        }
+    }
 
+
+    public static void main(String[] args) {
+        ArrayList<Servidor_classe> servers_ativos = new ArrayList<>();
+
+        int listeningPort;
+        DatagramSocket socket = null;
+        DatagramPacket packet; //para receber os pedidos e enviar as respostas
+        String receivedMsg, responseMsg;
+
+        if (args.length != 1) {
+            System.out.println("Sintaxe: java TcpTimeServer listeningPort");
+            return;
+        }
+
+        try {
+            listeningPort = Integer.parseInt(args[0]); //5001;
+            socket = new DatagramSocket(listeningPort);
+
+            System.out.println("GRDS inicializado por protocolo UDP...");
+
+            while(true){
+                packet = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
+                socket.receive(packet);
+
+                receivedMsg = new String(packet.getData(), 0, packet.getLength());
+
+                System.out.println("\nRecebido \"" + receivedMsg + "\" de " +
+                        packet.getAddress().getHostAddress() + ":" + packet.getPort());
+
+
+                if(!receivedMsg.equals(SV_CONNECT_REQUEST)){  //Recebe ligação do servidor
+
+                    if(receivedMsg.equals(CL_CONNECT_REQUEST)) {  //Recebe ligação do cliente
+                        //responseMsg = "CONNECTED Cliente"; //mensagem de sucesso
+
+                        // packet.setData(responseMsg.getBytes());
+                        //packet.setLength(responseMsg.length());
+
+                        distribui_svs(servers_ativos, packet.getAddress(), packet.getPort());
+
+                        //socket.send(packet);
+                    }
+                    continue;
+                }
+
+                setServer(servers_ativos, packet.getAddress(), packet.getPort());
+
+                //setServer(packet.getAddress().getHostAddress(), packet.getPort());
+
+                //System.out.println(getServers_ativos().toString());
+                System.out.println("\nSvs ativos: " + servers_ativos.size());
+                int i = 0;
+                for(Servidor_classe s : servers_ativos) {
+                    System.out.println(i + ". " + s.getIp().getHostAddress() + " | porto udp " + s.getPorto_escuta_UDP() + " | porto tcp " + + s.getPorto_escuta_TCP());
+                    i++;
+                }
+
+                responseMsg = "CONNECTED Servidor"; //mensagem de sucesso
+
+                packet.setData(responseMsg.getBytes());
+                packet.setLength(responseMsg.length());
+
+                socket.send(packet);
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
 
 
