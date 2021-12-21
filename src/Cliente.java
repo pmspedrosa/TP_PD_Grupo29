@@ -4,12 +4,17 @@ import java.net.*;
 public class Cliente {
     public static final String CONNECT_REQUEST = "SERVIDOR";
     public static final int TIMEOUT = 10; //segundos
+    public static final int MAX_SIZE = 256;
+
 
 
     public static void main(String[] args) {
         InetAddress grdsAddress;
         int grdsPort;
         DatagramPacket mypacket;
+        Servidor_classe resposta;
+        InetAddress serverAddr;
+        int serverPortTCP;
 
 
         try (DatagramSocket mysocket = new DatagramSocket()) {
@@ -25,6 +30,19 @@ public class Cliente {
 
             mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), grdsAddress, grdsPort);
             mysocket.send(mypacket);
+
+            mypacket = new DatagramPacket(new byte[MAX_SIZE],MAX_SIZE);
+            mysocket.receive(mypacket);
+
+            //Deserializar o fluxo de bytes recebido para um array de bytes encapsulado por bin
+            ByteArrayInputStream bin = new ByteArrayInputStream(mypacket.getData(), 0 , mypacket.getLength());
+            ObjectInputStream oin = new ObjectInputStream(bin);
+            resposta = (Servidor_classe) oin.readObject();
+
+            serverAddr = resposta.getIp();
+            serverPortTCP = resposta.getPorto_escuta_TCP();
+
+            System.out.println("vou ligar a " + serverAddr + ":" + serverPortTCP);
 
         } catch (SocketException e) {
             e.printStackTrace();

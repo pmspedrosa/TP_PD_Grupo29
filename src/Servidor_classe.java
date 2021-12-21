@@ -2,13 +2,14 @@ public class Servidores {
 
     private String ip;
     private int porto_escuta_UDP;       //porto de escuta UDP
-    private int porto_escuta;           //porto de escuta TCP
+    private int porto_escuta_TCP;           //porto de escuta TCP
     private int conta_inatividade;      //contador de periodos sem receção
 
 
     public Servidores(String ip, int porto){
         this.ip = ip;
-        this.porto_escuta = porto;
+        this.porto_escuta_UDP = porto;
+        this.porto_escuta_TCP = -1;
         this.conta_inatividade = 0;
         this.porto_escuta_UDP = 5010;
     }
@@ -21,12 +22,12 @@ public class Servidores {
         this.ip = ip;
     }
 
-    public int getPorto_escuta() {
-        return porto_escuta;
+    public int getPorto_escuta_TCP() {
+        return porto_escuta_TCP;
     }
 
-    public void setPorto_escuta(int porto_escuta) {
-        this.porto_escuta = porto_escuta;
+    public void setPorto_escuta_TCP(int porto_escuta_TCP) {
+        this.porto_escuta_TCP = porto_escuta_TCP;
     }
 
     public int getConta_inatividade() {

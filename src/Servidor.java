@@ -1,10 +1,53 @@
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.*;
 
 public class Servidor {
     //public static final int MAX_SIZE = 256;
     public static final String CONNECT_REQUEST = "SERVIDOR";
     public static final int TIMEOUT = 10; //segundos
+    public static final int MAX_SIZE = 256;
+
+    private InetAddress ip_GRDS;
+    private int porto_GRDS;
+
+    public Servidor(InetAddress ip, int porto){
+        //verificar se é válido
+
+        this.ip_GRDS = ip;
+        this.porto_GRDS = porto;
+    }
+
+    @Override
+    public void run() {
+        try (DatagramSocket mysocket = new DatagramSocket()){
+            while (true) {
+                    Thread.sleep(Servidor.DELAY);
+                    System.out.println("UDP Conectado porto: " + mysocket.getLocalPort());
+
+                    String sgdbAddress;
+                    InetAddress grdsAddress;
+                    int grdsPort;
+                    DatagramPacket mypacket;
+                    String receivedMsg;
+
+                    mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), ip_GRDS, porto_GRDS);
+                    mysocket.send(mypacket);
+
+                    mypacket = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
+                    mysocket.receive(mypacket);
+
+                    receivedMsg = new String(mypacket.getData(), 0, mypacket.getLength());
+                    System.out.println(receivedMsg);
+            }
+        } catch (InterruptedException e) {} catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) {
         String sgdbAddress;
@@ -39,8 +82,18 @@ public class Servidor {
                 return;
             }
 
-            mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), grdsAddress, grdsPort);
-            mysocket.send(mypacket);
+            /* mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), grdsAddress, grdsPort);
+            mysocket.send(mypacket); -- a thread é responsável pela comunicação
+
+            mypacket = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
+            mysocket.receive(mypacket);
+
+            receivedMsg = new String(mypacket.getData(), 0, mypacket.getLength());
+            System.out.println(receivedMsg); */
+
+            Thread t;
+            t = new Thread(new Servidor(grdsAddress, grdsPort), "Thread " + Math.random()%10);
+            t.start();
 
         } catch(UnknownHostException e){
             System.out.println("Destino desconhecido:\n\t"+e);
@@ -65,12 +118,12 @@ public class Servidor {
 // negócio e pelo armazenamento replicado de ficheiros;
 
 
-//Na fase de arranque, os clientes e os servidores recebem o
-// endereço IP e o porto de escuta UDP do GRDS. >> utilização de parametros (ao iniciar o programa cliente)
-//pode ser inicializado sem parâmetros tem de mandar via multicast (230.30.30.30 e porto UDP 3030)
+//Na fase de arranque, os clientes e os servidores recebem o-------
+// endereço IP e o porto de escuta UDP do GRDS. >> utilização de parametros (ao iniciar o programa cliente)--------
+//pode ser inicializado sem parâmetros tem de mandar via multicast (230.30.30.30 e porto UDP 3030)----------
 
 
-//Os servidores devem enviar, via UDP e com uma periodicidade de 20 segundos,
+// Os servidores devem enviar, via UDP e com uma periodicidade de 20 segundos,
 // uma mensagem ao GRDS com indicação de um porto de escuta TCP (automático)
 // em que possam aceitar ligações de clientes. Passados três períodos sem
 // receção de mensagens de um determinado servidor, este é “esquecido” pelo
