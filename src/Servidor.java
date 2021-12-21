@@ -3,7 +3,44 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 
-public class Servidor {
+
+class AtendeClientesTCP extends Thread { //tcp
+    public AtendeClientesTCP(InetAddress ip, int port) {
+
+    }
+
+    @Override
+    public void run() {
+        int listeningPort;
+        Socket toClientSocket;
+
+        try (ServerSocket socket = new ServerSocket();
+             ObjectInputStream in = new ObjectInputStream(socket.accept().getInputStream());
+             ObjectOutputStream out = new ObjectOutputStream(socket.accept().getOutputStream());) {
+
+            while (true) {
+                //enviar socket.getLocalPort() via udp!
+
+               // toClientSocket = socket.accept();
+               // toClientSocket.setSoTimeout(TIMEOUT);
+
+                    Thread.sleep(Servidor.DELAY);
+                    System.out.println("Aguarda Ligações!!! PASSARAM 20SEG");
+
+            }
+        } catch (InterruptedException e) {} catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+public class Servidor implements Runnable{
+    static final int DELAY = 5000; //5 seconds
+
+
     //public static final int MAX_SIZE = 256;
     public static final String CONNECT_REQUEST = "SERVIDOR";
     public static final int TIMEOUT = 10; //segundos
@@ -54,6 +91,7 @@ public class Servidor {
         InetAddress grdsAddress;
         int grdsPort;
         DatagramPacket mypacket;
+        String receivedMsg;
 
 /*
         if(args.length != 3){
@@ -70,7 +108,9 @@ public class Servidor {
                 grdsAddress = InetAddress.getByName("230.30.30.30");
                 grdsPort = 3030;
 
-                //!!!!!!!!!!!!!!!!!!!!!verificar se ligação com base de dados é estabelcida ou não!!!!!!!!!!!!!!!!!!!!!!!!!
+                /**
+                 * verificar se ligação com base de dados é estabelcida ou não!
+                 */
             }
             else if (args.length == 3) {
                 grdsAddress = InetAddress.getByName(args[0]);
@@ -97,11 +137,9 @@ public class Servidor {
 
         } catch(UnknownHostException e){
             System.out.println("Destino desconhecido:\n\t"+e);
-        } catch(NumberFormatException e){
+        } catch(NumberFormatException e) {
             System.out.println("O porto do GRDS deve ser um inteiro positivo.");
-        } catch(SocketTimeoutException e){
-            System.out.println("Nao foi recebida qualquer resposta:\n\t"+e);
-        } catch(SocketException e){
+        }catch(SocketException e){
             System.out.println("Ocorreu um erro ao nivel do socket UDP:\n\t"+e);
         } catch(IOException e){
             System.out.println("Ocorreu um erro no acesso ao socket:\n\t"+e);
