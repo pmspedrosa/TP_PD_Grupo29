@@ -1,24 +1,26 @@
-public class Servidores {
+import java.io.Serializable;
+import java.net.InetAddress;
 
-    private String ip;
+public class Servidor_classe implements Serializable {
+
+    private InetAddress ip;
     private int porto_escuta_UDP;       //porto de escuta UDP
     private int porto_escuta_TCP;           //porto de escuta TCP
     private int conta_inatividade;      //contador de periodos sem receção
 
 
-    public Servidores(String ip, int porto){
+    public Servidor_classe(InetAddress ip, int porto){
         this.ip = ip;
         this.porto_escuta_UDP = porto;
         this.porto_escuta_TCP = -1;
         this.conta_inatividade = 0;
-        this.porto_escuta_UDP = 5010;
     }
 
-    public String getIp() {
+    public InetAddress getIp() {
         return ip;
     }
 
-    public void setIp(String ip) {
+    public void setIp(InetAddress ip) {
         this.ip = ip;
     }
 
@@ -43,6 +45,7 @@ public class Servidores {
     }
 
     public void setPorto_escuta_UDP(int porto_escuta_UDP) {
+        //VERIFICAR PORTO UDP
         this.porto_escuta_UDP = porto_escuta_UDP;
     }
 }
