@@ -34,7 +34,7 @@ public class Cliente {
             mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), grdsAddress, grdsPort);
             mysocket.send(mypacket);
 
-            mypacket = new DatagramPacket(new byte[MAX_SIZE],MAX_SIZE);
+            mypacket = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
             mysocket.receive(mypacket);
 
             resposta = new String(mypacket.getData(), 0, mypacket.getLength());
@@ -109,7 +109,68 @@ public class Cliente {
 
 
 
+/*
+public class TcpSerializedTimeClient {
 
+    public static final int MAX_SIZE = 4000;
+    public static final String TIME_REQUEST = "TIME";
+    public static final int TIMEOUT = 10; //segundos
+
+    public static void main(String[] args) throws IOException
+    {
+
+        InetAddress serverAddr = null;
+        int serverPort = -1;
+        Socket socket = null;
+
+        ObjectInputStream oin = null;
+        ObjectOutputStream oout = null;
+
+        Time response;
+
+        if(args.length != 2){
+            System.out.println("Sintaxe: java TcpSerializedTimeClientIncomplete serverAddress serverUdpPort");
+            return;
+        }
+
+        try{
+
+            serverAddr = InetAddress.getByName(args[0]);
+            serverPort = Integer.parseInt(args[1]);
+
+            socket = new Socket(serverAddr, serverPort);
+            socket.setSoTimeout(TIMEOUT*1000);
+
+            //Cria os objectos que permitem serializar e deserializar objectos em socket
+            oin = new ObjectInputStream(socket.getInputStream());
+            oout = new ObjectOutputStream(socket.getOutputStream());
+
+            //Serializa a string TIME_REQUEST para o OutputStream associado a socket
+            oout.reset(); //para nao enviar a mensagem anterior
+            oout.writeObject(TIME_REQUEST);
+            oout.flush();
+
+            //Deserializa a resposta recebida em socket
+            response = (Time) oin.readObject();
+
+            if(response == null){
+                System.out.println("O servidor nao enviou qualquer respota antes de"
+                        + " fechar aligacao TCP!");
+            }else{
+                System.out.println("Hora indicada pelo servidor: " + response);
+            }
+
+        }catch(Exception e){
+            System.out.println("Ocorreu um erro no acesso ao socket:\n\t"+e);
+        }finally{
+            if(socket != null){
+                socket.close();
+            }
+        }
+    }
+
+}
+ */
 
 
 

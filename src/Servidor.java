@@ -5,32 +5,22 @@ import java.net.*;
 
 
 class AtendeClientesTCP extends Thread { //tcp
-    public AtendeClientesTCP(InetAddress ip, int port) {
+    private Socket s_client;
 
+    public AtendeClientesTCP(Socket s) {
+        //verificar socket
+        this.s_client = s;
     }
 
     @Override
     public void run() {
-        int listeningPort;
-        Socket toClientSocket;
-
-        try (ServerSocket socket = new ServerSocket();
-             ObjectInputStream in = new ObjectInputStream(socket.accept().getInputStream());
-             ObjectOutputStream out = new ObjectOutputStream(socket.accept().getOutputStream());) {
-
+        try{
             while (true) {
-                //enviar socket.getLocalPort() via udp!
-
-               // toClientSocket = socket.accept();
-               // toClientSocket.setSoTimeout(TIMEOUT);
-
-                    Thread.sleep(Servidor.DELAY);
-                    System.out.println("Aguarda Ligações!!! PASSARAM 20SEG");
-
+                System.out.println("Thread que está a atender " + s_client.getInetAddress().getHostAddress()
+                        + ":" + s_client.getPort());
+                System.out.println("Aguarda Ligações!!! PASSARAM 20SEG");
             }
-        } catch (InterruptedException e) {} catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
     }
 }
 
@@ -48,35 +38,38 @@ public class Servidor implements Runnable{
 
     private InetAddress ip_GRDS;
     private int porto_GRDS;
+    private int porto_tcp;
 
-    public Servidor(InetAddress ip, int porto){
+    public Servidor(InetAddress ip, int porto, int porto_tcp){
         //verificar se é válido
 
         this.ip_GRDS = ip;
         this.porto_GRDS = porto;
+        this.porto_tcp = porto_tcp;
     }
 
     @Override
     public void run() {
         try (DatagramSocket mysocket = new DatagramSocket()){
             while (true) {
-                    Thread.sleep(Servidor.DELAY);
-                    System.out.println("UDP Conectado porto: " + mysocket.getLocalPort());
+                System.out.println("UDP Conectado porto: " + mysocket.getLocalPort());
 
-                    String sgdbAddress;
-                    InetAddress grdsAddress;
-                    int grdsPort;
-                    DatagramPacket mypacket;
-                    String receivedMsg;
+                String sgdbAddress;
+                InetAddress grdsAddress;
+                int grdsPort;
+                DatagramPacket mypacket;
+                String receivedMsg;
 
-                    mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), ip_GRDS, porto_GRDS);
-                    mysocket.send(mypacket);
+                mypacket = new DatagramPacket((CONNECT_REQUEST + "-" + this.porto_tcp).getBytes(), (CONNECT_REQUEST + "-" + this.porto_tcp).length(), ip_GRDS, porto_GRDS);
+                mysocket.send(mypacket);
 
-                    mypacket = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
-                    mysocket.receive(mypacket);
+                mypacket = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
+                mysocket.receive(mypacket);
 
-                    receivedMsg = new String(mypacket.getData(), 0, mypacket.getLength());
-                    System.out.println(receivedMsg);
+                receivedMsg = new String(mypacket.getData(), 0, mypacket.getLength());
+                System.out.println(receivedMsg);
+
+                Thread.sleep(Servidor.DELAY);
             }
         } catch (InterruptedException e) {} catch (SocketException e) {
             e.printStackTrace();
@@ -100,7 +93,8 @@ public class Servidor implements Runnable{
         }
 */
 
-        try(DatagramSocket mysocket = new DatagramSocket()) {
+        try(DatagramSocket mysocket = new DatagramSocket();
+            ServerSocket socket_TCP = new ServerSocket((int)Math.random()%9999)) {
             mysocket.setSoTimeout(TIMEOUT * 1000);
 
             //por omissão, tenta descobrir o GRDS no endereço de multicast 230.30.30.30 e porto UDP 3030
@@ -122,25 +116,26 @@ public class Servidor implements Runnable{
                 return;
             }
 
-            /* mypacket = new DatagramPacket(CONNECT_REQUEST.getBytes(), CONNECT_REQUEST.length(), grdsAddress, grdsPort);
-            mysocket.send(mypacket); -- a thread é responsável pela comunicação
-
-            mypacket = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
-            mysocket.receive(mypacket);
-
-            receivedMsg = new String(mypacket.getData(), 0, mypacket.getLength());
-            System.out.println(receivedMsg); */
-
             Thread t;
-            t = new Thread(new Servidor(grdsAddress, grdsPort), "Thread " + Math.random()%10);
-            t.start();
+            t = new Thread(new Servidor(grdsAddress, grdsPort, socket_TCP.getLocalPort()), "Thread GRDS");
+            t.start(); //thread responsável pela comunicação com o GRDS 20s/20s
+
+            Socket toClientSocket;
+
+            while(true){
+                toClientSocket = socket_TCP.accept();
+                toClientSocket.setSoTimeout(TIMEOUT);
+
+                AtendeClientesTCP t2 = new AtendeClientesTCP(toClientSocket);
+                t2.start();
+            }
 
         } catch(UnknownHostException e){
             System.out.println("Destino desconhecido:\n\t"+e);
         } catch(NumberFormatException e) {
             System.out.println("O porto do GRDS deve ser um inteiro positivo.");
         }catch(SocketException e){
-            System.out.println("Ocorreu um erro ao nivel do socket UDP:\n\t"+e);
+            System.out.println("Ocorreu um erro ao nivel do socket:\n\t"+e);
         } catch(IOException e){
             System.out.println("Ocorreu um erro no acesso ao socket:\n\t"+e);
         } finally{

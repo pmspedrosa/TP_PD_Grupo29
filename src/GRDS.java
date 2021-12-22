@@ -11,7 +11,7 @@ public class GRDS {
     private static final int MAX_SIZE = 120;
     private static final int TIMEOUT = 10; //10 seg (multiplica por 1000 abaixo)
 
-   //private ArrayList<Servidores> servers_ativos = new ArrayList<>();
+    //private ArrayList<Servidores> servers_ativos = new ArrayList<>();
     private static int last_sv_distribuido = -1; //guarda último sv distribuido para o cliente
 
 
@@ -33,13 +33,13 @@ public class GRDS {
         return false;
     }
 
-    public static void setServer(ArrayList<Servidor_classe> servers_ativos, InetAddress ip, int porto){
+    public static void setServer(ArrayList<Servidor_classe> servers_ativos, InetAddress ip, int porto, int porto_tcp){
         //ip e porto UDP!!!
 
         if(contem(ip, porto, servers_ativos)) {
             System.out.println("JÁ EXISTE!!!");
         }else{
-            Servidor_classe s = new Servidor_classe(ip, porto);
+            Servidor_classe s = new Servidor_classe(ip, porto, porto_tcp);
             servers_ativos.add(s);
         }
     }
@@ -67,17 +67,14 @@ public class GRDS {
 
         DatagramPacket packet = null;
 
-        try(DatagramSocket socket = new DatagramSocket(); //autocloseable
-            ByteArrayOutputStream bout  = new ByteArrayOutputStream();
-            ObjectOutputStream oout = new ObjectOutputStream(bout)){
+        try(DatagramSocket socket = new DatagramSocket()){ //autocloseable
 
             socket.setSoTimeout(TIMEOUT*1000);
 
-            //Serializar servidores para um array de bytes encapsulado por bout
-            oout.writeUnshared(s);
+            String dadosServidor = ip.getHostAddress() + "-" + s.getPorto_escuta_TCP();
 
             //Construir um datagrama UDP com o resultado da serialização
-            packet = new DatagramPacket(bout.toByteArray(), bout.size(), ip, porto);
+            packet = new DatagramPacket(dadosServidor.getBytes(), dadosServidor.length(), ip, porto);
             socket.send(packet);
 
         } catch(Exception e){
@@ -92,7 +89,7 @@ public class GRDS {
     public static void atualizaUDP(InetAddress ip, int portoTCP, int portoUDP, ArrayList<Servidor_classe> s){      //verificar se o servidor que está a contactar já existe na lista de svs ativos ou não
         for(Servidor_classe sv : s) {
             if (sv.getIp() == ip && sv.getPorto_escuta_TCP() == portoTCP) {
-                    sv.setPorto_escuta_UDP(portoUDP);
+                sv.setPorto_escuta_UDP(portoUDP);
             }
         }
     }
@@ -127,7 +124,7 @@ public class GRDS {
                         packet.getAddress().getHostAddress() + ":" + packet.getPort());
 
 
-                if(!receivedMsg.equals(SV_CONNECT_REQUEST)){  //Recebe ligação do servidor
+                if(!receivedMsg.split("-")[0].equals(SV_CONNECT_REQUEST)){  //Recebe ligação do servidor
 
                     if(receivedMsg.equals(CL_CONNECT_REQUEST)) {  //Recebe ligação do cliente
                         //responseMsg = "CONNECTED Cliente"; //mensagem de sucesso
@@ -142,7 +139,10 @@ public class GRDS {
                     continue;
                 }
 
-                setServer(servers_ativos, packet.getAddress(), packet.getPort());
+                System.out.println("PACKET: " + receivedMsg.split("-")[0]);
+
+                setServer(servers_ativos, packet.getAddress(), packet.getPort(),
+                        Integer.parseInt(receivedMsg.split("-")[1]));
 
                 //setServer(packet.getAddress().getHostAddress(), packet.getPort());
 

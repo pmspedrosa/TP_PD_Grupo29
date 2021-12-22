@@ -3,16 +3,18 @@ import java.net.InetAddress;
 
 public class Servidor_classe implements Serializable {
 
+    public static final long serialVersionUID = 1;
+
     private InetAddress ip;
     private int porto_escuta_UDP;       //porto de escuta UDP
     private int porto_escuta_TCP;           //porto de escuta TCP
     private int conta_inatividade;      //contador de periodos sem receção
 
 
-    public Servidor_classe(InetAddress ip, int porto){
+    public Servidor_classe(InetAddress ip, int porto, int porto_tcp){
         this.ip = ip;
         this.porto_escuta_UDP = porto;
-        this.porto_escuta_TCP = -1;
+        this.porto_escuta_TCP = porto_tcp;
         this.conta_inatividade = 0;
     }
 
