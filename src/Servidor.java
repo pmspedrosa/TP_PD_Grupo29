@@ -151,6 +151,128 @@ public class Servidor implements Runnable{
     }
 }
 
+/*
+public class TcpSerializedTimeConcorrentServer extends Thread{ //OU implements Runnable
+
+    public static final int TIMEOUT = 5000; //milisegundos
+    public static final String TIME_REQUEST = "TIME";
+
+    private final Socket toClientSocket;
+
+    public TcpSerializedTimeConcorrentServer(Socket s){
+        this.toClientSocket = s;
+    }
+
+    @Override
+    public void run(){
+
+        ObjectInputStream oin;
+        ObjectOutputStream oout;
+
+        String request;
+        Calendar calendar;
+
+        try{
+            oout = new ObjectOutputStream(toClientSocket.getOutputStream());
+            oin = new ObjectInputStream(toClientSocket.getInputStream());
+
+            request = (String) oin.readObject();
+
+            if(request == null){ //EOF
+                return;
+            }
+
+            System.out.println("Recebido \"" + request.trim() + "\" de " +
+                    toClientSocket.getInetAddress().getHostAddress() + ":" +
+                    toClientSocket.getPort() + " do zeca " + toClientSocket.getInetAddress().getHostName());
+
+            if(!request.equalsIgnoreCase(TIME_REQUEST)){
+                System.out.println("Unexpected request");
+                return;
+            }
+
+            try {
+                //simula processamento e um minuto (60000 milisegundos)
+                Thread.sleep(5000);
+            } catch (InterruptedException e){ }
+
+            calendar = GregorianCalendar.getInstance();
+
+            oout.writeObject(new Time(calendar.get(GregorianCalendar.HOUR_OF_DAY),
+                    calendar.get(GregorianCalendar.MINUTE),
+                    calendar.get(GregorianCalendar.SECOND)));
+            oout.flush();
+
+        }catch(Exception e){
+            System.out.println("Problema na comunicacao com o cliente " +
+                    toClientSocket.getInetAddress().getHostAddress() + ":" +
+                    toClientSocket.getPort()+"\n\t" + e);
+        }finally{
+            try{
+                toClientSocket.close();
+            }catch(IOException e){}
+        }
+    }
+
+    public static void main(String args[]){
+        ServerSocket socket;
+        int listeningPort;
+        socket = null;
+        Socket toClientSocket;
+
+        if(args.length != 1){
+            System.out.println("Sintaxe: java TcpSerializedTimeServerIncomplete listeningPort");
+            return;
+        }
+
+        try{
+            listeningPort = Integer.parseInt(args[0]);
+            socket = new ServerSocket(listeningPort);
+
+            System.out.println("TCP Time Server iniciado no porto " + socket.getLocalPort() + " ...");
+
+            while(true){
+
+                    toClientSocket = socket.accept();
+                    toClientSocket.setSoTimeout(TIMEOUT);
+
+                    TcpSerializedTimeConcorrentServer t = new TcpSerializedTimeConcorrentServer(toClientSocket);
+                    t.start();
+            }
+
+        }catch(NumberFormatException e){
+            System.out.println("O porto de escuta deve ser um inteiro positivo.");
+        }catch(IOException e){
+            System.out.println("Ocorreu um erro ao nivel do socket de escuta:\n\t"+e);
+        }finally{
+            if(socket!=null){
+                try {
+                    socket.close();
+                } catch (IOException ex) {}
+            }
+        }
+
+    }
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //responsável por toda a lógica de
 // negócio e pelo armazenamento replicado de ficheiros;

@@ -1,7 +1,9 @@
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import org.omg.CORBA.WStringSeqHelper;
+
+import java.io.*;
 import java.net.*;
+import java.sql.Time;
+import java.util.Arrays;
 
 public class Cliente {
     public static final String CONNECT_REQUEST = "CLIENTE";
@@ -14,10 +16,9 @@ public class Cliente {
         InetAddress grdsAddress;
         int grdsPort;
         DatagramPacket mypacket;
-        Servidor_classe resposta;
-        InetAddress serverAddr;
-        int serverPortTCP;
-
+        InetAddress serverAddr = null;
+        int serverPortTCP = 0;
+        String resposta;
 
         try (DatagramSocket mysocket = new DatagramSocket()) {
             mysocket.setSoTimeout(TIMEOUT * 1000);
@@ -36,13 +37,14 @@ public class Cliente {
             mypacket = new DatagramPacket(new byte[MAX_SIZE],MAX_SIZE);
             mysocket.receive(mypacket);
 
-            //Deserializar o fluxo de bytes recebido para um array de bytes encapsulado por bin
-            ByteArrayInputStream bin = new ByteArrayInputStream(mypacket.getData(), 0 , mypacket.getLength());
-            ObjectInputStream oin = new ObjectInputStream(bin);
-            resposta = (Servidor_classe) oin.readObject();
+            resposta = new String(mypacket.getData(), 0, mypacket.getLength());
+            //System.out.println("PACKET: " + resposta.spl
 
-            serverAddr = resposta.getIp();
-            serverPortTCP = resposta.getPorto_escuta_TCP();
+            String []aux = resposta.split("-");
+
+            serverAddr = InetAddress.getByName(aux[0]);
+            serverPortTCP = Integer.parseInt(aux[1]);
+
 
             System.out.println("vou ligar a " + serverAddr + ":" + serverPortTCP);
 
@@ -50,13 +52,62 @@ public class Cliente {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
 
+        BufferedReader bin;
+        PrintStream pout;
+        String resposta_TCP;
+
+
+        //Ligar ao servidor
+        try(Socket socket = new Socket(serverAddr, serverPortTCP)){
+
+            System.out.println("\nConectando ...");
+            socket.setSoTimeout(TIMEOUT*1000);
+
+            pout = new PrintStream(socket.getOutputStream(), true);
+
+            //bin = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            pout.println(TIMEOUT);
+
+            //resposta_TCP = bin.readLine();
+            //System.out.println("RespostaTCP: " + resposta_TCP);
+
+
+
+            /*
+            //Cria os objectos que permitem serializar e deserializar objectos em socket
+            oin = new ObjectInputStream(socket.getInputStream());
+            oout = new ObjectOutputStream(socket.getOutputStream());
+
+            //Serializa a string TIME_REQUEST para o OutputStream associado a socket
+            oout.reset(); //para nao enviar a mensagem anterior
+            oout.writeObject(TIME_REQUEST);
+            oout.flush();
+
+            //Deserializa a resposta recebida em socket
+            response = (Time) oin.readObject();
+
+            if(response == null){
+                System.out.println("O servidor nao enviou qualquer respota antes de"
+                        + " fechar aligacao TCP!");
+            }else{
+                System.out.println("Hora indicada pelo servidor: " + response);
+            }
+            */
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
+
+
+
 
 
 
