@@ -15,6 +15,9 @@ public class ThreadKillingSpree extends Thread {
     public void atualizaInatividade() {
         for (Servidor_classe sv : s) {
             sv.atualizaInatividade();
+
+            if(sv.getConta_inatividade() > Constantes.InatividadeServidor)
+                s.remove(sv);
         }
     }
 
@@ -27,10 +30,8 @@ public class ThreadKillingSpree extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("TTTTTTTTTThread Kill...");
-            getServers_ativos();
             Thread.sleep(Constantes.Tsleep * 1000);
-
+            getServers_ativos();
             atualizaInatividade();
         } catch (InterruptedException e) {
             e.printStackTrace();
