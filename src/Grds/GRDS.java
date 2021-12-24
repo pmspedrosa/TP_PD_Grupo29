@@ -53,7 +53,7 @@ public class GRDS {
 //    }
 
 
-    //cliente contacta Grds.GRDS para receber o IP  e o Porto de Escuta TCP do Servidor.Servidor
+    //cliente contacta GRDS para receber o IP  e o Porto de Escuta TCP do Servidor.Servidor
     public static void distribui_svs(ArrayList<Servidor_classe> servers_ativos, InetAddress ip_cliente, int porto_cliente){
         if(last_sv_distribuido > servers_ativos.size()-1)
             last_sv_distribuido = -1;
@@ -113,7 +113,7 @@ public class GRDS {
             listeningPort = Integer.parseInt(args[0]); //5001;
             socket = new DatagramSocket(listeningPort);
 
-            System.out.println("Grds.GRDS inicializado por protocolo UDP...");
+            System.out.println("GRDS inicializado por protocolo UDP...");
 
             while(true){
                 ThreadKillingSpree thread = new ThreadKillingSpree(servers_ativos);
@@ -155,7 +155,7 @@ public class GRDS {
                 System.out.println("\nSvs ativos: " + servers_ativos.size());
                 int i = 0;
                 for(Servidor_classe s : servers_ativos) {
-                    System.out.println(i + ". " + s.getIp().getHostAddress() + " | porto udp " + s.getPorto_escuta_UDP() + " | porto tcp " + + s.getPorto_escuta_TCP());
+                    System.out.println(i + ". " + s.getIp().getHostAddress() + " | porto udp " + s.getPorto_escuta_UDP() + " | porto tcp " + s.getPorto_escuta_TCP());
                     i++;
                 }
 
@@ -185,17 +185,17 @@ public class GRDS {
 
 
 //Na fase de arranque, os clientes e os servidores recebem o
-// endereço IP e o porto de escuta UDP do Grds.GRDS. >> utilização de parametros (ao iniciar o programa cliente)-----
+// endereço IP e o porto de escuta UDP do GRDS. >> utilização de parametros (ao iniciar o programa cliente)-----
 
 
 //se houver mais que um sv ativo ele distribui os clientes de acordo com escalonamento circular-----
 
 
 // Os servidores devem enviar, via UDP e com uma periodicidade de 20 segundos,
-// uma mensagem ao Grds.GRDS com indicação de um porto de escuta TCP (automático)
+// uma mensagem ao GRDS com indicação de um porto de escuta TCP (automático)
 // em que possam aceitar ligações de clientes. Passados três períodos sem
 // receção de mensagens de um determinado servidor, este é “esquecido” pelo
-// Grds.GRDS;
+// GRDS;
 
 
 
@@ -204,10 +204,10 @@ public class GRDS {
 
 
 //Quando um servidor efetua uma alteração na base dados na sequência de
-// uma interação com um cliente este envia ao Grds.GRDS, via UDP,
+// uma interação com um cliente este envia ao GRDS, via UDP,
 // uma mensagem a informar que houve alterações.
 //listener
-//Grds.GRDS reencaminha a informação recebida, via UDP,
+//GRDS reencaminha a informação recebida, via UDP,
 // para os restantes servidores ativos.
 
 
@@ -240,7 +240,7 @@ public class GRDS {
 
 
 //Quando está em causa a disponibilização de um ficheiro,
-// os servidores que recebem a informação vinda do Grds.GRDS também
+// os servidores que recebem a informação vinda do GRDS também
 // obtêm o ficheiro via uma ligação TCP temporária estabelecida
 // com o servidor no endereço IP e porto TCP indicados.
 // A transferência deve ser feita em background;
@@ -248,7 +248,7 @@ public class GRDS {
 
 
 //Quando é solicitada a eliminação de um ficheiro pelo utilizador
-// que o disponibilizou, a mensagem enviada para o Grds.GRDS também deve
+// que o disponibilizou, a mensagem enviada para o GRDS também deve
 // incluir esta indicação para que todos os servidores apaguem o ficheiro
 // nos seus sistemas de ficheiros locais;
 
@@ -263,5 +263,5 @@ public class GRDS {
 
 //Quando um servidor termina de forma ordenada/intencional, este encerra
 //as ligações TCP ativas, o que faz com que os clientes que se encontram
-// ligados a ele também terminem de forma ordenada, informa o Grds.GRDS e
+// ligados a ele também terminem de forma ordenada, informa o GRDS e
 // atualiza a informação na base de dados.
