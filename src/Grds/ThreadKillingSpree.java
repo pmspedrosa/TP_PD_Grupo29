@@ -20,7 +20,7 @@ public class ThreadKillingSpree extends Thread {
 
     public void getServers_ativos() {
         for (Servidor_classe sv : s) {
-            System.out.println("\n\t\t\t\t\t\t\t\t\t\t<<DEBUG>  || " + sv.getIp() + "-" + sv.getPorto_escuta_UDP() + " ---> Inativ: " + sv.getConta_inatividade() + "\n");
+            System.out.println("\n\t\t\t\t\t\t\t\t\t\t<DEBUG>  || " + sv.getIp() + "-" + sv.getPorto_escuta_UDP() + " ---> Inativ: " + sv.getConta_inatividade() + "\n");
         }
     }
 
