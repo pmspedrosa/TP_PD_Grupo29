@@ -1,3 +1,5 @@
+package Grds.gestao_servidores;
+
 import java.io.Serializable;
 import java.net.InetAddress;
 
@@ -40,6 +42,10 @@ public class Servidor_classe implements Serializable {
 
     public void setConta_inatividade(int conta_inatividade) {
         this.conta_inatividade = conta_inatividade;
+    }
+
+    public void atualizaInatividade() {
+        this.conta_inatividade += 1;
     }
 
     public int getPorto_escuta_UDP() {

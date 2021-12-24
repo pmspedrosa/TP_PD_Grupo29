@@ -1,46 +1,21 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+package Servidor.threads_servidor;
+
+import java.io.*;
 import java.net.*;
 
-
-class AtendeClientesTCP extends Thread { //tcp
-    private Socket s_client;
-
-    public AtendeClientesTCP(Socket s) {
-        //verificar socket
-        this.s_client = s;
-    }
-
-    @Override
-    public void run() {
-        try{
-            while (true) {
-                System.out.println("Thread que está a atender " + s_client.getInetAddress().getHostAddress()
-                        + ":" + s_client.getPort());
-                System.out.println("Aguarda Ligações!!! PASSARAM 20SEG");
-            }
-        } catch (Exception e) {}
-    }
-}
-
-
-
-
-public class Servidor implements Runnable{
-    static final int DELAY = 5000; //5 seconds
+public class Thread_GRDS implements Runnable{
+    static final int DELAY = 20; //seconds
 
 
     //public static final int MAX_SIZE = 256;
     public static final String CONNECT_REQUEST = "SERVIDOR";
-    public static final int TIMEOUT = 10; //segundos
     public static final int MAX_SIZE = 256;
 
     private InetAddress ip_GRDS;
     private int porto_GRDS;
     private int porto_tcp;
 
-    public Servidor(InetAddress ip, int porto, int porto_tcp){
+    public Thread_GRDS(InetAddress ip, int porto, int porto_tcp){
         //verificar se é válido
 
         this.ip_GRDS = ip;
@@ -52,7 +27,7 @@ public class Servidor implements Runnable{
     public void run() {
         try (DatagramSocket mysocket = new DatagramSocket()){
             while (true) {
-                System.out.println("UDP Conectado porto: " + mysocket.getLocalPort());
+                System.out.println("\t\t\t\t\t\t\t\t\t\t\tDEBUG: UDP Conectado porto: " + mysocket.getLocalPort());
 
                 String sgdbAddress;
                 InetAddress grdsAddress;
@@ -60,88 +35,24 @@ public class Servidor implements Runnable{
                 DatagramPacket mypacket;
                 String receivedMsg;
 
-                mypacket = new DatagramPacket((CONNECT_REQUEST + "-" + this.porto_tcp).getBytes(), (CONNECT_REQUEST + "-" + this.porto_tcp).length(), ip_GRDS, porto_GRDS);
+                String mensagem = CONNECT_REQUEST + "-" + this.porto_tcp;
+                mypacket = new DatagramPacket(mensagem.getBytes(), mensagem.length(), ip_GRDS, porto_GRDS);
                 mysocket.send(mypacket);
+
+                //System.out.println("Mandei mensagem ao GRDS: Estou vivo");
 
                 mypacket = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
                 mysocket.receive(mypacket);
 
                 receivedMsg = new String(mypacket.getData(), 0, mypacket.getLength());
-                System.out.println(receivedMsg);
+                //System.out.println(receivedMsg);
 
-                Thread.sleep(Servidor.DELAY);
+                Thread.sleep(DELAY * 1000);
             }
         } catch (InterruptedException e) {} catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-
-    public static void main(String[] args) {
-        String sgdbAddress;
-        InetAddress grdsAddress;
-        int grdsPort;
-        DatagramPacket mypacket;
-        String receivedMsg;
-
-/*
-        if(args.length != 3){
-            System.out.println("Sintaxe: java Servidor <IP do GRDS> <Porto de escuta do GRDS> <IP do SGBD>");
-            return;
-        }
-*/
-
-        try(DatagramSocket mysocket = new DatagramSocket();
-            ServerSocket socket_TCP = new ServerSocket((int)Math.random()%9999)) {
-            mysocket.setSoTimeout(TIMEOUT * 1000);
-
-            //por omissão, tenta descobrir o GRDS no endereço de multicast 230.30.30.30 e porto UDP 3030
-            if(args.length == 1) {
-                grdsAddress = InetAddress.getByName("230.30.30.30");
-                grdsPort = 3030;
-
-                /**
-                 * verificar se ligação com base de dados é estabelcida ou não!
-                 */
-            }
-            else if (args.length == 3) {
-                grdsAddress = InetAddress.getByName(args[0]);
-                grdsPort = Integer.parseInt(args[1]);
-            }
-            else{
-                System.out.println("Sintaxe: java Servidor <IP do GRDS> <Porto de escuta do GRDS> <IP do SGBD>");
-                System.out.println("OU java Servidor <IP do SGBD>");
-                return;
-            }
-
-            Thread t;
-            t = new Thread(new Servidor(grdsAddress, grdsPort, socket_TCP.getLocalPort()), "Thread GRDS");
-            t.start(); //thread responsável pela comunicação com o GRDS 20s/20s
-
-            Socket toClientSocket;
-
-            while(true){
-                toClientSocket = socket_TCP.accept();
-                toClientSocket.setSoTimeout(TIMEOUT);
-
-                AtendeClientesTCP t2 = new AtendeClientesTCP(toClientSocket);
-                t2.start();
-            }
-
-        } catch(UnknownHostException e){
-            System.out.println("Destino desconhecido:\n\t"+e);
-        } catch(NumberFormatException e) {
-            System.out.println("O porto do GRDS deve ser um inteiro positivo.");
-        }catch(SocketException e){
-            System.out.println("Ocorreu um erro ao nivel do socket:\n\t"+e);
-        } catch(IOException e){
-            System.out.println("Ocorreu um erro no acesso ao socket:\n\t"+e);
-        } finally{
-//            if(mysocket != null){
-//                mysocket.close();
-//            }
         }
     }
 }
@@ -274,15 +185,15 @@ public class TcpSerializedTimeConcorrentServer extends Thread{ //OU implements R
 
 
 //Na fase de arranque, os clientes e os servidores recebem o-------
-// endereço IP e o porto de escuta UDP do GRDS. >> utilização de parametros (ao iniciar o programa cliente)--------
+// endereço IP e o porto de escuta UDP do Grds.GRDS. >> utilização de parametros (ao iniciar o programa cliente)--------
 //pode ser inicializado sem parâmetros tem de mandar via multicast (230.30.30.30 e porto UDP 3030)----------
 
 
 // Os servidores devem enviar, via UDP e com uma periodicidade de 20 segundos,
-// uma mensagem ao GRDS com indicação de um porto de escuta TCP (automático)
+// uma mensagem ao Grds.GRDS com indicação de um porto de escuta TCP (automático)
 // em que possam aceitar ligações de clientes. Passados três períodos sem
 // receção de mensagens de um determinado servidor, este é “esquecido” pelo
-// GRDS;
+// Grds.GRDS;
 
 
 
@@ -295,7 +206,7 @@ public class TcpSerializedTimeConcorrentServer extends Thread{ //OU implements R
 
 
 //Quando um servidor efetua uma alteração na base dados na sequência de
-// uma interação com um cliente este envia ao GRDS, via UDP,
+// uma interação com um cliente este envia ao Grds.GRDS, via UDP,
 // uma mensagem a informar que houve alterações.
 
 //Caso tenha sido disponibilizado um ficheiro,
@@ -313,7 +224,7 @@ public class TcpSerializedTimeConcorrentServer extends Thread{ //OU implements R
 
 
 //Quando está em causa a disponibilização de um ficheiro,
-// os servidores que recebem a informação vinda do GRDS também
+// os servidores que recebem a informação vinda do Grds.GRDS também
 // obtêm o ficheiro via uma ligação TCP temporária estabelecida
 // com o servidor no endereço IP e porto TCP indicados.
 // A transferência deve ser feita em background;
@@ -321,7 +232,7 @@ public class TcpSerializedTimeConcorrentServer extends Thread{ //OU implements R
 
 
 //Quando é solicitada a eliminação de um ficheiro pelo utilizador
-// que o disponibilizou, a mensagem enviada para o GRDS também deve
+// que o disponibilizou, a mensagem enviada para o Grds.GRDS também deve
 // incluir esta indicação para que todos os servidores apaguem o ficheiro
 // nos seus sistemas de ficheiros locais;
 
@@ -334,7 +245,7 @@ public class TcpSerializedTimeConcorrentServer extends Thread{ //OU implements R
 
 //Quando um servidor termina de forma ordenada/intencional, este encerra
 //as ligações TCP ativas, o que faz com que os clientes que se encontram
-// ligados a ele também terminem de forma ordenada, informa o GRDS e
+// ligados a ele também terminem de forma ordenada, informa o Grds.GRDS e
 // atualiza a informação na base de dados.
 
 
