@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 
@@ -14,16 +15,9 @@ public class GRDS {
     public static final String CL_CONNECT_REQUEST = "CLIENTE";
     private static final int MAX_SIZE = 120;
 
-    static ArrayList<Servidor_classe> servers_ativos = new ArrayList<>();
-
-    //private ArrayList<Servidores> servers_ativos = new ArrayList<>();
+    private static ArrayList<Servidor_classe> servers_ativos = new ArrayList<>();
     private static int last_sv_distribuido = -1; //guarda último sv distribuido para o cliente
 
-
-//
-//    public int getNum_Servers_ativos(){
-//        return servers_ativos.size();
-//    }
 
     public static boolean contem(InetAddress ip, int porto){      //verificar se o servidor que está a contactar já existe na lista de svs ativos ou não
         for(Servidor_classe sv : servers_ativos) {
@@ -38,22 +32,16 @@ public class GRDS {
 
 
     public static void setServer(InetAddress ip, int porto, int porto_tcp){
-        //ip e porto UDP!!!
-
         if(contem(ip, porto)) {
             System.out.println("JÁ EXISTE!!!");
-        }else{
+        } else{
             Servidor_classe s = new Servidor_classe(ip, porto, porto_tcp);
             servers_ativos.add(s);
         }
     }
 
-//    public void remove_sv(Servidores s){
-//        servers_ativos.remove(s);
-//    }
 
-
-    //cliente contacta GRDS para receber o IP  e o Porto de Escuta TCP do Servidor.Servidor
+    //distribui os clientes pelos servidores ativos, segundo politica round-robin
     public static void distribui_svs(ArrayList<Servidor_classe> servers_ativos, InetAddress ip_cliente, int porto_cliente){
         if(last_sv_distribuido > servers_ativos.size()-1)
             last_sv_distribuido = -1;
@@ -64,15 +52,16 @@ public class GRDS {
         else
             comunica_via_udp(ip_cliente, porto_cliente, servers_ativos.get(last_sv_distribuido));
 
-        System.out.println("DEBUG SV: Size: " + servers_ativos.size() + "| atual: " + last_sv_distribuido++);
+        System.out.println("<DEBUG> distribui_svs Size: " + servers_ativos.size() + " | atual: " + last_sv_distribuido);
     }
 
+
+    //contacta Cliente para enviar o IP e o porto de escuta TCP do Servidor designado
     public static void comunica_via_udp(InetAddress ip, int porto, Servidor_classe s){
 
         DatagramPacket packet = null;
 
-        try(DatagramSocket socket = new DatagramSocket()){ //autocloseable
-
+        try(DatagramSocket socket = new DatagramSocket()){
             socket.setSoTimeout(Constantes.TIMEOUT*1000);
 
             String dadosServidor = ip.getHostAddress() + "-" + s.getPorto_escuta_TCP();
@@ -81,8 +70,10 @@ public class GRDS {
             packet = new DatagramPacket(dadosServidor.getBytes(), dadosServidor.length(), ip, porto);
             socket.send(packet);
 
-        } catch(Exception e){
-            System.out.println("Problema:\n\t"+e);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Problema de I/O\n\t" + e);
         }
     }
 
@@ -119,9 +110,10 @@ public class GRDS {
                 ThreadKillingSpree thread = new ThreadKillingSpree(servers_ativos);
                 thread.start();
 
+                System.out.println("--------------Esperando--------------");
+
                 packet = new DatagramPacket(new byte[MAX_SIZE], MAX_SIZE);
                 socket.receive(packet);
-                System.out.println("--------------Esperando--------------");
 
                 receivedMsg = new String(packet.getData(), 0, packet.getLength());
 
@@ -131,25 +123,21 @@ public class GRDS {
 
                 if(!receivedMsg.split("-")[0].equals(SV_CONNECT_REQUEST)){  //Recebe ligação do servidor
 
-                    if(receivedMsg.equals(CL_CONNECT_REQUEST)) {  //Recebe ligação do cliente
-                        //responseMsg = "CONNECTED Cliente.Cliente"; //mensagem de sucesso
-
-                        // packet.setData(responseMsg.getBytes());
-                        //packet.setLength(responseMsg.length());
-
+                    if(receivedMsg.equals(CL_CONNECT_REQUEST)) {   //Recebe ligação do cliente
                         distribui_svs(servers_ativos, packet.getAddress(), packet.getPort());
 
-                        //socket.send(packet);
+                        /**
+                         * responder ao cliente caso nao exista servidores.
+                         */
                     }
+
                     continue;
                 }
 
-                System.out.println("PACKET: " + receivedMsg.split("-")[0]);
+                //caso tenha recebido ligação de um servidor...
 
                 setServer(packet.getAddress(), packet.getPort(),
                         Integer.parseInt(receivedMsg.split("-")[1]));
-
-                //setServer(packet.getAddress().getHostAddress(), packet.getPort());
 
                 //System.out.println(getServers_ativos().toString());
                 System.out.println("\nSvs ativos: " + servers_ativos.size());
@@ -159,7 +147,7 @@ public class GRDS {
                     i++;
                 }
 
-                responseMsg = "CONNECTED Servidor.Servidor"; //mensagem de sucesso
+                responseMsg = "CONNECTED Servidor"; //mensagem de sucesso
 
                 packet.setData(responseMsg.getBytes());
                 packet.setLength(responseMsg.length());

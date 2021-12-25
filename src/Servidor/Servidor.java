@@ -15,16 +15,9 @@ public class Servidor {
         DatagramPacket mypacket;
         String receivedMsg;
 
-/*
-        if(args.length != 3){
-            System.out.println("Sintaxe: java Servidor.Servidor <IP do Grds.GRDS> <Porto de escuta do Grds.GRDS> <IP do SGBD>");
-            return;
-        }
-*/
-
-        try(DatagramSocket mysocket = new DatagramSocket();
+        try(//DatagramSocket mysocket = new DatagramSocket();
             ServerSocket socket_TCP = new ServerSocket((int)Math.random()%9999)) {
-            mysocket.setSoTimeout(Constantes.TIMEOUT * 1000);
+            //mysocket.setSoTimeout(Constantes.TIMEOUT * 1000);
 
             //por omissão, tenta descobrir o Grds.GRDS no endereço de multicast 230.30.30.30 e porto UDP 3030
             if(args.length == 1) {
@@ -49,8 +42,9 @@ public class Servidor {
             t = new Thread(new Thread_GRDS(grdsAddress, grdsPort, socket_TCP.getLocalPort()), "Thread GRDS");
             t.start(); //thread responsável pela comunicação com o Grds. GRDS 20s/20s
 
-            Socket toClientSocket;
 
+            Socket toClientSocket;
+            //Atender clientes
             while(true){
 
                 toClientSocket = socket_TCP.accept();

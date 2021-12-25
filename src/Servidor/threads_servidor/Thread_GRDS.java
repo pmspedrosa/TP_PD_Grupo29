@@ -1,7 +1,10 @@
 package Servidor.threads_servidor;
 
+import Constantes.Constantes;
+
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.TimeoutException;
 
 public class Thread_GRDS implements Runnable{
     static final int DELAY = 20; //seconds
@@ -26,6 +29,8 @@ public class Thread_GRDS implements Runnable{
     @Override
     public void run() {
         try (DatagramSocket mysocket = new DatagramSocket()){
+            mysocket.setSoTimeout(Constantes.TIMEOUT * 1000);
+
             while (true) {
                 System.out.println("\t\t\t\t\t\t\t\t\t\t\tDEBUG: UDP Conectado porto: " + mysocket.getLocalPort());
 
@@ -49,7 +54,11 @@ public class Thread_GRDS implements Runnable{
 
                 Thread.sleep(DELAY * 1000);
             }
-        } catch (InterruptedException e) {} catch (SocketException e) {
+        } catch (SocketTimeoutException e){
+            System.out.println("GRDS está offline\n\t" + e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
