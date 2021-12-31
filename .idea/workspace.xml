@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3eae1323-f7cb-47d6-8a8c-4679db6db8de" name="Changes" comment="final" />
+    <list id="ae5d6507-3e5f-4819-8227-fb795325e457" name="Changes by rudrigo" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Grds/GRDS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grds/GRDS.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="233TbscU8EZdgWrpAYvUOqO9rVn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.25140712" />
+  </component>
+  <component name="RunManager" selected="Application.GRDS">
+    <configuration name="Cliente (10)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (1)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (2)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (3)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (4)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (5)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (6)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (7)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (8)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente (9)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cliente" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 ola" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GRDS" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Grds.GRDS" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="5002" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Grds.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (10)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (1)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (2)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (3)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (4)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (5)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (6)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (7)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (8)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor (9)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servidor" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servidor.Servidor" />
+      <module name="TP_PD_Grupo29" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 5002 195.154.179.17" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.GRDS" />
+      <item itemvalue="Application.Servidor" />
+      <item itemvalue="Application.Servidor (1)" />
+      <item itemvalue="Application.Servidor (2)" />
+      <item itemvalue="Application.Servidor (3)" />
+      <item itemvalue="Application.Servidor (4)" />
+      <item itemvalue="Application.Servidor (5)" />
+      <item itemvalue="Application.Servidor (6)" />
+      <item itemvalue="Application.Servidor (7)" />
+      <item itemvalue="Application.Servidor (8)" />
+      <item itemvalue="Application.Servidor (9)" />
+      <item itemvalue="Application.Servidor (10)" />
+      <item itemvalue="Application.Cliente" />
+      <item itemvalue="Application.Cliente (1)" />
+      <item itemvalue="Application.Cliente (2)" />
+      <item itemvalue="Application.Cliente (3)" />
+      <item itemvalue="Application.Cliente (4)" />
+      <item itemvalue="Application.Cliente (5)" />
+      <item itemvalue="Application.Cliente (6)" />
+      <item itemvalue="Application.Cliente (7)" />
+      <item itemvalue="Application.Cliente (8)" />
+      <item itemvalue="Application.Cliente (9)" />
+      <item itemvalue="Application.Cliente (10)" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3eae1323-f7cb-47d6-8a8c-4679db6db8de" name="Changes" comment="" />
+      <created>1640961844655</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1640961844655</updated>
+      <workItem from="1640961847265" duration="104000" />
+      <workItem from="1640961998400" duration="9307000" />
+      <workItem from="1640971776604" duration="5399000" />
+      <workItem from="1640977311534" duration="1305000" />
+    </task>
+    <task id="LOCAL-00001" summary="final">
+      <created>1640977967857</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640977967857</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="final" />
+    <option name="LAST_COMMIT_MESSAGE" value="final" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/TP_PD_Grupo29$GRDS.ic" NAME="GRDS Coverage Results" MODIFIED="1640977323441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>Grds.*</FILTER>
+    </SUITE>
+  </component>
+</project>
