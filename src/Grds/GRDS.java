@@ -18,8 +18,9 @@ public class GRDS {
 
     public static boolean contem(InetAddress ip, int porto){      //verificar se o servidor que está a contactar já existe na lista de svs ativos ou não
         for(Servidor_classe sv : servers_ativos) {
-            //System.out.println("\n\t\t\t\t\t\t\t\t\t\t<DEBUG> " + ip + "-" +porto + " || " + sv.getIp() + "-" + sv.getPorto_escuta_UDP());
-            if (sv.getPorto_escuta_UDP() == porto) { //falta verificar ip!!!
+
+            System.out.println(sv.getIp() + " == " + ip + " ?");
+            if (sv.getIp().equals(ip) && sv.getPorto_escuta_UDP() == porto) {
                 sv.setConta_inatividade(0);
                 return true;
             }
@@ -30,7 +31,7 @@ public class GRDS {
 
     public static void setServer(InetAddress ip, int porto, int porto_tcp){
         if(contem(ip, porto)) {
-            System.out.println("JÁ EXISTE!!!");
+            System.out.println("Recebido sinal de vida de: " + ip + ":" + porto);
         } else{
             Servidor_classe s = new Servidor_classe(ip, porto, porto_tcp);
             servers_ativos.add(s);
@@ -46,10 +47,22 @@ public class GRDS {
         int size = servers_ativos.size();
         int cont=0;
 
+        if(last_sv_distribuido >= servers_ativos.size()-1)
+            last_sv_distribuido = 0;
+
         if(servers_ativos.size() == 0){
             comunica_via_udp(ip_cliente, porto_cliente, null);
             return;
         }
+
+//        int contador = 0;
+//        for (Servidor_classe sv : servers_ativos){
+//            if(sv.getConta_inatividade() > 0)
+//                contador++;
+//        }
+//
+//        if(contador == servers_ativos.size())
+//            comunica_via_udp(ip_cliente, porto_cliente, null);
 
         else{
             if(last_sv_distribuido == 0){ //primeiro elemento do array de servidores ativos
@@ -57,7 +70,7 @@ public class GRDS {
                     do {
                         last_sv_distribuido++;
 
-                        if (last_sv_distribuido > servers_ativos.size()) {
+                        if (last_sv_distribuido > servers_ativos.size()-1) {
                             last_sv_distribuido = 0;
                             comunica_via_udp(ip_cliente, porto_cliente, null);
                             return;
@@ -102,6 +115,7 @@ public class GRDS {
 
     //contacta Cliente para enviar o IP e o porto de escuta TCP do Servidor designado
     public static void comunica_via_udp(InetAddress ip, int porto, Servidor_classe s){
+        System.out.println("comunica_via_udp()");
         DatagramPacket packet = null;
 
         try(DatagramSocket socket = new DatagramSocket()){

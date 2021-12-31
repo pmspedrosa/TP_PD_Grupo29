@@ -35,7 +35,7 @@ public class ThreadVerificaInatividade extends Thread {
                 //getServers_ativos();
 
                 //removeServers();
-                Thread.sleep((Constantes.INATIVIDADE + 1)  * 1000);
+                Thread.sleep((Constantes.INATIVIDADE)  * 1000);
 
                 //System.out.println("\n\t\t\t\t\t\t\t\t\t\t<DEBUG>  || " + s.getIp() + "-" + s.getPorto_escuta_UDP() + " ---> Inativ: " + s.getConta_inatividade());
                 atualizaInatividade();

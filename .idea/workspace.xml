@@ -5,53 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3eae1323-f7cb-47d6-8a8c-4679db6db8de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/BaseDados/SGBD.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Cliente/threads_cliente/ThreadComunicaServidor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Cliente/threads_cliente/ThreadNotificacoes_Cli.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Cliente/ui/MenuUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Grds/ThreadNotificacoes_GRDS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Grds/ThreadVerificaInatividade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Servidor/threads_servidor/ThreadAtendeCliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Servidor/threads_servidor/ThreadNotificacoes_SV.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Servidor/threads_servidor/ThreadTrocaFiles.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared_features/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_27.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_27.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Cliente/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Cliente/Cliente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Cliente/threads_cliente/ProcessaInfosCli.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Cliente/txt_cliente" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Constantes/Constantes.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Constantes/Constantes.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Grds/GRDS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Grds/GRDS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Grds/ThreadKillingSpree.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Grds/gestao_servidores/Servidor_classe.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Grds/gestao_servidores/Servidor_classe.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Notas" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/SGBD.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Servidor/Servidor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Servidor/Servidor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Servidor/threads_servidor/AtendeCliente.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Servidor/threads_servidor/Thread_GRDS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/ui/MenuUI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cliente/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cliente/threads_cliente/ProcessaInfosCli.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cliente/txt_cliente" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Grds/ThreadVerificaInatividade.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Grds/ThreadVerificaInatividade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Servidor/threads_servidor/ThreadGRDS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP_PD_Grupo29/Servidor/threads_servidor/ThreadGRDS.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Constantes/Constantes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constantes/Constantes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Grds/GRDS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grds/GRDS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Grds/ThreadKillingSpree.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Grds/gestao_servidores/Servidor_classe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grds/gestao_servidores/Servidor_classe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Notas" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SGBD.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Servidor/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servidor/Servidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Servidor/threads_servidor/AtendeCliente.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Servidor/threads_servidor/Thread_GRDS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servidor/threads_servidor/ThreadGRDS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/MenuUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Grds/ThreadVerificaInatividade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grds/ThreadVerificaInatividade.java" afterDir="false" />
     </list>
-    <list id="ae5d6507-3e5f-4819-8227-fb795325e457" name="Changes by rudrigo" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Grds/GRDS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grds/GRDS.java" afterDir="false" />
-    </list>
+    <list id="ae5d6507-3e5f-4819-8227-fb795325e457" name="Changes by rudrigo" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,26 +23,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/Grds/GRDS.java">
-      <ranges>
-        <range start1="5" end1="9" start2="5" end2="6" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="18" end1="19" start2="15" end2="16" changelist="ae5d6507-3e5f-4819-8227-fb795325e457" />
-        <range start1="23" end1="24" start2="20" end2="21" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="39" end1="39" start2="36" end2="39" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="45" end1="47" start2="45" end2="52" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="48" end1="50" start2="53" end2="58" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="51" end1="53" start2="59" end2="68" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="54" end1="55" start2="69" end2="99" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="60" end1="61" start2="104" end2="104" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="66" end1="67" start2="109" end2="110" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="68" end1="68" start2="111" end2="116" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="109" end1="111" start2="157" end2="158" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="126" end1="126" start2="173" end2="177" changelist="3eae1323-f7cb-47d6-8a8c-4679db6db8de" />
-        <range start1="145" end1="146" start2="196" end2="197" changelist="ae5d6507-3e5f-4819-8227-fb795325e457" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -102,7 +46,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.25140712" />
   </component>
-  <component name="RunManager" selected="Application.GRDS">
+  <component name="RunManager" selected="Application.Cliente (1)">
     <configuration name="Cliente (10)" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Cliente.Cliente" />
       <module name="TP_PD_Grupo29" />
@@ -463,6 +407,7 @@
       <workItem from="1640961998400" duration="9307000" />
       <workItem from="1640971776604" duration="5399000" />
       <workItem from="1640977311534" duration="246000" />
+      <workItem from="1640979409368" duration="3829000" />
     </task>
     <servers />
   </component>
