@@ -9,7 +9,7 @@ public class Servidor_classe implements Serializable {
 
     private InetAddress ip;
     private int porto_escuta_UDP;       //porto de escuta UDP
-    private int porto_escuta_TCP;           //porto de escuta TCP
+    private int porto_escuta_TCP;       //porto de escuta TCP
     private int conta_inatividade;      //contador de periodos sem receção
 
 
@@ -19,6 +19,7 @@ public class Servidor_classe implements Serializable {
         this.porto_escuta_TCP = porto_tcp;
         this.conta_inatividade = 0;
     }
+
 
     public InetAddress getIp() {
         return ip;
