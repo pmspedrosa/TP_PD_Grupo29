@@ -166,8 +166,8 @@ public class ThreadAtendeCliente extends Thread { //tcp
         Message resultado = SGBD.procurarUtilizador(argumentos);
         return resultado;
     }
-    
-    
+
+
 
     private Message adicionarContacto(String[] argumentos) {
         Message resultado = SGBD.adicionarContacto(argumentos, username);

@@ -1,129 +1,95 @@
 package Cliente.threads_cliente;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketException;
+import java.net.*;
 
 public class ThreadSendFiles extends Thread {
     private static final int MAX_SIZE = 4000;
-    private File localDirectory;
+    private String localFilePath;
     private String fileName;
-    private InetAddress ip;
-    private int porto;
+    private Socket socket;
 
-    public ThreadSendFiles(File localDirectory, String fileName, InetAddress ip, int porto){
-        this.localDirectory = localDirectory;
+    public ThreadSendFiles(String localFilePath, String fileName, Socket socket){
+        this.localFilePath = localFilePath;
         this.fileName = fileName;
-        this.ip = ip;
-        this.porto = porto;
+        this.socket = socket;
     }
 
     @Override
-    public void run(){
-//        File localDirectory = null;
-        String canonicalFilePath = null;
+    public void run() {
         FileInputStream requestedFileInputStream;
-
-        Socket socket = null;
-        BufferedReader bin;
-        PrintStream pOut;
-        int listeningPort;
+        String requestedCanonicalFilePath = null;
+        File localDirectory;
+        String fileName = null;
 
         byte[] fileChunk = new byte[MAX_SIZE];
         int nbytes;
 
-//        if(args.length != 2){
-//            System.out.println("Syntax: java GetFileTcpServer listeningPort localRootDirectory");
-//            return;
-//        }
+        PrintStream pout = null;
 
-//        localDirectory = new File(this.localDirectory.trim());
+        fileName = this.fileName.trim();
+        localFilePath = "C:/filesToSend";
+        localDirectory = new File(localFilePath.trim());
 
-
-        if(!localDirectory.exists()){
-            System.out.println("Directory: " + localDirectory + " doesn't exist.");
+        if (!localDirectory.exists()) {
+            System.out.println("A directoria " + localDirectory + " nao existe!");
             return;
         }
 
-        if(!localDirectory.isDirectory()){
-            System.out.println("Path: " + localDirectory + "isn't a directory.");
+        if (!localDirectory.isDirectory()) {
+            System.out.println("O caminho " + localDirectory + " nao se refere a uma directoria!");
             return;
         }
 
-        if(!localDirectory.canRead()){
-            System.out.println("No permissions to read from: " + localDirectory + ".");
+        if (!localDirectory.canWrite()) {
+            System.out.println("Sem permissoes de escrita na directoria " + localDirectory);
             return;
         }
 
-        try{
-            socket = new Socket(ip, porto);
+        try {
+            pout = new PrintStream(socket.getOutputStream(), true);
 
-//            System.out.println("Transfer files server initialized at port " + mySocket.getLocalPort());
+            requestedCanonicalFilePath = new File(localDirectory + File.separator + fileName).getCanonicalPath();
 
-//            nextClient = null;
-
-//            try {
-//                nextClient = mySocket.accept();
-
-                bin = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                pOut = new PrintStream(socket.getOutputStream(), true);
-
-//                requestedFileName = bin.readLine();
-
-//                System.out.println("Request received to \"" + requestedFileName + "\" from " + nextClient.getInetAddress().getHostAddress() + ":" + nextClient.getPort());
-
-                canonicalFilePath = new File(localDirectory + File.separator + fileName).getCanonicalPath();
-
-                if (!canonicalFilePath.startsWith(localDirectory.getCanonicalPath() + File.separator)) {
-                    System.out.println("Forbidden access to the file " + canonicalFilePath);
-                    System.out.println("Root directory isn't the same as " + localDirectory.getCanonicalPath());
-                    return;
-                }
-
-                requestedFileInputStream = new FileInputStream(canonicalFilePath);
-                System.out.println("File " + canonicalFilePath + " open to read.");
-
-                do {
-                    nbytes = requestedFileInputStream.read(fileChunk, 0, MAX_SIZE);
-
-                    if (nbytes == -1) { // EOF warning
-                        nbytes = 0;
-                    }
-
-                    pOut.write(fileChunk, 0, nbytes);
-                    try {
-                        Thread.sleep(1); // on same computer so files dont get corrupted
-                    } catch (InterruptedException ex) {
-                        System.out.println("Erro: " + ex);
-                    }
-
-                } while (nbytes > 0);
-
-                System.out.println("Upload completed");
-
-                requestedFileInputStream.close();
-//            }finally {
-//                socket.close();
-//            }
-        } catch(NumberFormatException e){
-            System.out.println("Port must be a positive integer.");
-        } catch(SocketException e) {
-            System.out.println("Error at UDP socket:\n\t" + e);
-        } catch(FileNotFoundException e){
-            System.out.println("Exception {\"" + e + "\"} occurred while opening the file " + canonicalFilePath + ".");
-        } catch(IOException e) {
-            System.out.println("Error accessing the socket\n\t" + e);
-        } finally{
-            if(socket != null){
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (!requestedCanonicalFilePath.startsWith(localDirectory.getCanonicalPath() + File.separator)) {
+                System.out.println("Forbidden access to the file " + requestedCanonicalFilePath + ".");
+                System.out.println("Root directory isn't the same as " + localDirectory.getCanonicalPath() + ".");
+                return;
             }
+
+            requestedFileInputStream = new FileInputStream(requestedCanonicalFilePath);
+            System.out.println("File " + requestedCanonicalFilePath + " open to read.");
+
+            do {
+                nbytes = requestedFileInputStream.read(fileChunk, 0, MAX_SIZE);
+
+                if (nbytes == -1) { // EOF warning
+                    nbytes = 0;
+                }
+
+                pout.write(fileChunk, 0, nbytes);
+                try {
+                    Thread.sleep(1); // on same computer so files dont get corrupted
+                } catch (InterruptedException ex) {
+
+                }
+
+            } while (nbytes > 0);
+
+            System.out.println("Upload completo");
+
+            requestedFileInputStream.close();
+
+        } catch (UnknownHostException e) {
+            System.out.println("Destino desconhecido:\n\t" + e);
+        } catch (NumberFormatException e) {
+            System.out.println("O porto do servidor deve ser um inteiro positivo:\n\t" + e);
+        } catch (SocketTimeoutException e) {
+            System.out.println("Nao foi recebida qualquer bloco adicional, podendo a transferencia estar incompleta:\n\t" + e);
+        } catch (SocketException e) {
+            System.out.println("Ocorreu um erro ao nivel do socket TCP:\n\t" + e);
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro no acesso ao socket ou ao ficheiro local " + localFilePath + ":\n\t" + e);
         }
     }
 }

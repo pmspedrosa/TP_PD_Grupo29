@@ -14,13 +14,13 @@ import java.util.Scanner;
 public class ThreadComunicaServidor  extends Thread { //tcp
     private InetAddress ip;
     private int porto;
-    File localD;
+    File localDirectory;
 
-    public ThreadComunicaServidor(/*Socket s*/ InetAddress ip, int porto, File localD) {
+    public ThreadComunicaServidor(/*Socket s*/ InetAddress ip, int porto, File localDirectory) {
         //socket = s;
         this.ip = ip;
         this.porto = porto;
-        this.localD = localD;
+        this.localDirectory = localDirectory;
     }
 
 
@@ -429,6 +429,10 @@ public class ThreadComunicaServidor  extends Thread { //tcp
 
                         case 10: //editar perfil
                             Message msgEditarPerfil = MenuUI.menu_editarperfil();
+
+                            if(msgEditarPerfil == null)
+                                break;
+
                             if(Constantes.DEBUG)
                                 System.out.println("<DEBUG> " + msgEditarPerfil.getArgumentos()[0]+ msgEditarPerfil.getArgumentos()[1]);
 
@@ -440,16 +444,19 @@ public class ThreadComunicaServidor  extends Thread { //tcp
                             if(Constantes.DEBUG)
                                 System.out.println("<DEBUG> " + msgFromServer.getArgumentos()[0]); //print da mensagem de sucesso/erro
                             break;
-                        case 11:
-//                            oout.reset(); //para nao enviar a mensagem anterior
-//                            oout.writeObject(new Message("ReceiveFile_FromClient", new String[]{"NomeFile.txt"}));
-//                            oout.flush();
 
-                            String localDirectory = "C:/files";
-                            String fileName = "teste.txt";
-                            ThreadSendFiles tFiles = new ThreadSendFiles(localD, fileName, ip, porto);
+                        case 11:
+                            String fileName = "img.png";
+                            String localDirectory = "C:/filesToSend";
+
+                            oout.reset();
+                            oout.writeObject(new Message("ReceiveFile_FromClient", new String[]{fileName}));
+                            oout.flush();
+
+                            ThreadSendFiles tFiles = new ThreadSendFiles(localDirectory, fileName, socket);
                             tFiles.start();
                             break;
+
                         case 0:
                             // TODO: 26/12/2021
                             //  função para sair

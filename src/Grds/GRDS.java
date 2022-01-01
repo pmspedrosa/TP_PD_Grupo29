@@ -19,7 +19,6 @@ public class GRDS {
     public static boolean contem(InetAddress ip, int porto){      //verificar se o servidor que está a contactar já existe na lista de svs ativos ou não
         for(Servidor_classe sv : servers_ativos) {
 
-            System.out.println(sv.getIp() + " == " + ip + " ?");
             if (sv.getIp().equals(ip) && sv.getPorto_escuta_UDP() == porto) {
                 sv.setConta_inatividade(0);
                 return true;

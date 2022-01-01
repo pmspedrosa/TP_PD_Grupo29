@@ -4,12 +4,12 @@ import java.io.*;
 import java.net.Socket;
 
 public class ThreadReceiveFiles extends Thread{
-    private static final String localPath = "D://SV_TESTE";
+    private static final String localPath = "C://receivedFiles";
 
     public static final int MAX_SIZE = 400000;
     public static final int TIMEOUT = 5; //segundos
 
-    private static Socket fromClient;
+    private final Socket fromClient;
     private final String nomeFile;
 
     public ThreadReceiveFiles(Socket s, String nomeFile) {
@@ -23,14 +23,10 @@ public class ThreadReceiveFiles extends Thread{
             ObjectInputStream oin = new ObjectInputStream(fromClient.getInputStream());)*/ {
             System.out.println("ENTREI NA THREAD DOS FICHEIROS!!!");
 
-            fromClient.setSoTimeout(TIMEOUT * 1000);
+            //fromClient.setSoTimeout(TIMEOUT * 1000);
 
-            PrintStream pout = new PrintStream(fromClient.getOutputStream(), true);
-            pout.println(nomeFile);
-
-            /*oout.reset(); //para nao enviar a mensagem anterior
-            oout.writeObject(new Message("Ready_FromSv", new String[]{}));
-            oout.flush();*/
+            //PrintStream pout = new PrintStream(fromClient.getOutputStream(), true);
+            //pout.println(nomeFile);
 
             //verificar se efetivamente está a receber algo xd
 

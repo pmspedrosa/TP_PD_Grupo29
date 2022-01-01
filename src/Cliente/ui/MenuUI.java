@@ -14,13 +14,13 @@ public class MenuUI {
         System.out.println("Login");
         System.out.println("-------------\n");
         do {
-            System.out.println("Username:");
+            System.out.println("Username: ");
             username = sc.nextLine();
-        }while (username == null || username == " " || username == "\n");
+        } while (username.equals("") || username.equals(" ") || username.equals("\n"));
         do {
-            System.out.println("\nPassword:");
+            System.out.println("\nPassword: ");
             password = sc.nextLine();
-        }while (password == null || password == " " || username == "\n");
+        } while (password.equals("") || password.equals(" ") || password.equals("\n"));
 
         String[] args = {username, password};
         Message msg = new Message("Login", args);
@@ -36,19 +36,18 @@ public class MenuUI {
         System.out.println("Registar");
         System.out.println("-------------\n");
 
-
         do {
             System.out.println("Nome:");
             nome = sc.nextLine();
-        }while (nome == null || nome == " " || nome == "\n");
+        }while (nome.equals("") || nome.equals(" ") || nome.equals("\n"));
         do {
             System.out.println("\nUsername:");
             username = sc.nextLine();
-        }while (username == null || username == " " || username == "\n");
+        }while (username.equals("") || username.equals(" ") || username.equals("\n"));
         do {
             System.out.println("\nPassword:");
             password = sc.nextLine();
-        }while (password == null || password == " " || password == "\n");
+        }while (password.equals("") || password.equals(" ") || password.equals("\n"));
 
 
         String[] args = {nome, username, password};
@@ -72,7 +71,7 @@ public class MenuUI {
             System.out.println("-------------\n\n");
             do {
                 nome = sc.nextLine();
-            }while (nome == null || nome == " "||nome == ("\n"));
+            }while (nome.equals("") || nome.equals(" ") || nome.equals("\n"));
 
             String[] args_grupo = {"null", nome};
             Message m = new Message("Show_msgs", args_grupo);
@@ -83,7 +82,7 @@ public class MenuUI {
             System.out.println("-------------\n\n");
             do {
                 nome = sc.nextLine();
-            } while (nome == null && nome == " " && nome == "\n");
+            } while (nome.equals("") || nome.equals(" ") || nome.equals("\n"));
 
             String[] args_utilizador = {nome, "null"};
             Message m = new Message("Show_msgs", args_utilizador);
@@ -102,12 +101,11 @@ public class MenuUI {
         Scanner sc = new Scanner(System.in);
         String msg;
         System.out.println("Para enviar ficheiro escreva \"FILE\" antes do path");
+
         do {
             System.out.println("Mensagem:");
             msg = sc.nextLine();
-
-
-        }while (msg == null || msg == " " || msg == "\n");
+        } while (msg.equals("") || msg.equals(" ") || msg.equals("\n"));
 
         if(msg.contains("\"FILE\"")){
             String[] args_file = {grupo,destino, msg };
@@ -136,12 +134,12 @@ public class MenuUI {
     public static Message eliminarContacto() {
         Scanner sc = new Scanner(System.in);
         String msg;
-        boolean sair = false;
+
         do {
-            System.out.println("Introduza Username a eliminar:");
+            System.out.println("Introduza Username a eliminar: ");
             msg = sc.nextLine();
 
-        }while (msg == " " && msg == "\n");
+        }while (msg.equals(" ") || msg.equals("\n"));
 
         String[] args_msg = {msg};
         Message m = new Message("Eliminate_contact", args_msg);
@@ -151,7 +149,7 @@ public class MenuUI {
 
 
     public static Message adicionarContacto() {
-        String username =pedirUsername();
+        String username = pedirUsername();
 
         String[] args = {username};
         Message m = new Message("Add_contact", args);
@@ -173,10 +171,10 @@ public class MenuUI {
         Scanner sc = new Scanner(System.in);
         String msg;
         do {
-            System.out.println("Novo nome Grupo:");
+            System.out.println("Novo nome Grupo: ");
             msg = sc.nextLine();
 
-        }while (msg == " " && msg == "\n");
+        }while (Objects.equals(msg, " ") || Objects.equals(msg, "\n"));
 
         String[] args = {grupo, msg};
         Message m = new Message("Change_name_group", args);
@@ -209,11 +207,11 @@ public class MenuUI {
         boolean sair=false;
         String nome, elemento;
         int cont=0;
-        System.out.println("\nNome Grupo:");
+        System.out.println("\nNome Grupo: ");
 
         do {
             nome = sc.nextLine();
-        } while (nome == null || nome == " " || nome == "\n");
+        } while (nome.equals("") || nome.equals(" ") || nome.equals("\n"));
 
         ArrayList<String[]> elementos_grupo = new ArrayList<>();
         System.out.println("\n-------------");
@@ -259,7 +257,7 @@ public class MenuUI {
             System.out.println("2 - Registar");
             System.out.println("0 - Sair");
 
-            System.out.println("Introduza opt: ");
+            System.out.print("> ");
 
             while (!sc.hasNextInt())
                 sc.next();
@@ -277,8 +275,6 @@ public class MenuUI {
         Scanner sc = new Scanner(System.in);
 
         do{
-            System.out.println(" 11 - Testar funcionalidade [DEBUG]\n\n");
-
             System.out.println("\n 1 - Mostrar Contactos (Msg/Grupos)");
             System.out.println(" 2 - Listar Utilizadores");
             System.out.println(" 3 - Procurar Utilizador");
@@ -292,7 +288,7 @@ public class MenuUI {
             System.out.println("0 - Terminar Sessão");
             // TODO: 28/12/2021 Terminar sessão
 
-            System.out.println("Introduza opt: ");
+            System.out.print("> ");
 
             opt = sc.nextInt();
         }while(opt<0 || opt>11);
@@ -317,7 +313,7 @@ public class MenuUI {
             System.out.println("2 - Utilizador");
             System.out.println("0 - Voltar");
 
-            System.out.println("Introduza opt: ");
+            System.out.print("> ");
 
             opt = sc.nextInt();
         }while (opt!=0 && opt!=1 && opt!=2);
@@ -346,7 +342,7 @@ public class MenuUI {
             }
             System.out.println("0 - Voltar");
 
-            System.out.println("Introduza opt: ");
+            System.out.print("> ");
 
             opt = sc.nextInt();
         }while (opt!=0 && opt!=1 && opt!=2 && opt!=3 && (admin && opt!=4) && (admin && opt!=5) && (admin && opt!=6) );
@@ -359,14 +355,13 @@ public class MenuUI {
         Scanner sc = new Scanner(System.in);
 
         do{
-            System.out.println("Introduza opt: ");
-
-            System.out.println("1 - Mudar Nome");
+            System.out.println("\n1 - Mudar Nome");
             System.out.println("2 - Mudar Password");
-
             System.out.println("0 - Voltar");
 
+            System.out.print("> ");
             opt = sc.nextInt();
+
         }while(opt!=0 && opt!=1 && opt!=2);
 
 //sc.next();
@@ -375,11 +370,11 @@ public class MenuUI {
         if(opt!=0) {
             do {
                 if (opt == 1)
-                    System.out.println("Nome:");
+                    System.out.println("Nome: ");
                 if (opt == 2)
-                    System.out.println("Password:");
-                msg = sc.next();
-            } while (msg == null && msg == " " && msg == "\n");
+                    System.out.println("Password: ");
+                msg = sc.nextLine();
+            } while (msg.equals("") || msg.equals(" ") || msg.equals("\n"));
 
             String opts = String.valueOf(opt);
 
@@ -398,9 +393,9 @@ public class MenuUI {
         Scanner sc = new Scanner(System.in);
         String username;
         do {
-            System.out.println("\nUsername:");
+            System.out.println("\nUsername: ");
             username = sc.nextLine();
-        }while (username == null || username == " " || username == "\n");
+        }while (username.equals("") || username.equals(" ") || username.equals("\n"));
 
         return username;
     }
